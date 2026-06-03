@@ -64,21 +64,23 @@
       </div>
     </div>
 
-    <div class="catalog-layout">
-      <div class="catalog-filters">
-      </div>
-      <div class="catalog-products">
-        <div class="catalog-loading" *ngIf="loading"></div>
-        <ng-container *ngIf="products?.length; else emptyBlock">
-<!--          <product-card [countInCart]="product.countInCart" *ngFor="let product of products; trackBy: trackById" [product]="product"></product-card>-->
-        </ng-container>
-        <ng-template #emptyBlock>
-          <div *ngIf="!loading && (!products || products.length === 0)" class="catalog-empty">
-            В данной категории товары отсутствуют, сделайте другой выбор
-          </div>
-        </ng-template>
-      </div>
-    </div>
+    <post-blog [posts]="posts"></post-blog>
+
+<!--    <div class="catalog-layout">-->
+<!--      <div class="catalog-filters">-->
+<!--      </div>-->
+<!--      <div class="catalog-products">-->
+<!--        <div class="catalog-loading" *ngIf="loading"></div>-->
+<!--        <ng-container *ngIf="products?.length; else emptyBlock">-->
+<!--&lt;!&ndash;          <product-card [countInCart]="product.countInCart" *ngFor="let product of products; trackBy: trackById" [product]="product"></product-card>&ndash;&gt;-->
+<!--        </ng-container>-->
+<!--        <ng-template #emptyBlock>-->
+<!--          <div *ngIf="!loading && (!products || products.length === 0)" class="catalog-empty">-->
+<!--            В данной категории товары отсутствуют, сделайте другой выбор-->
+<!--          </div>-->
+<!--        </ng-template>-->
+<!--      </div>-->
+<!--    </div>-->
 
     <div class="pagination" *ngIf="pages.length > 1">
       <div class="pagination-arrow" (click)="openPrevPage()"

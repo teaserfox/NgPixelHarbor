@@ -24,7 +24,7 @@ import {CategoryType} from "../../../../types/category.type";
 
 export class BlogComponent implements OnInit {
 
-  products: PostType[] = [];
+  posts: PostType[] = [];
   sortingOpens: CategoryType[] = [];
   categoriesWithTypes: CategoryWithTypeType[] = [];
   activeParams: ActiveParamsType = {
@@ -45,10 +45,16 @@ export class BlogComponent implements OnInit {
               private favoriteService: PostService,
               private authService: AuthService,
               private elementRef: ElementRef,
+              private postService: PostService,
               private router: Router) {
   }
 
   ngOnInit(): void {
+    this.postService.getPostAll()
+      .subscribe((data) => {
+        this.posts = checkResponse<PostType[]>(data);
+      });
+
     this.categoryService.getCategories()
       .subscribe(data => {
         const result = checkResponse<CategoryType[]>(data);
@@ -153,7 +159,7 @@ export class BlogComponent implements OnInit {
 
                 this.pages = Array.from({ length: data.pages }, (_, i) => i + 1);
 
-                this.products = data.items.map(product => {
+                this.posts = data.items.map(product => {
 
                   const productInCart = this.cart?.items?.find(
                     item => item.product.id === product.id

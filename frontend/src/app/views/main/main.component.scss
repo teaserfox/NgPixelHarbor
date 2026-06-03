@@ -260,6 +260,38 @@
   }
 }
 
+.stories {
+  margin-top: 120px;
+
+  .container {
+    .stories-title {
+      @include head-lora-36;
+        font-size: 38px;
+        margin-bottom: 40px;
+    }
+    .stories-href-blog {
+      font-size: 20px;
+      color: $two-base-text-color;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      column-gap: 14px;
+      text-decoration-line: underline;
+      text-underline-offset: 5px;
+    }
+
+    //a {
+    //  font-weight: 400;
+    //  text-decoration-line: underline;
+    //  text-underline-offset: 4px;
+    //  color: $two-base-text-color;
+    //  margin-top: auto;
+    //}
+  }
+}
+
+
 .reviews {
   margin-top: 120px;
 

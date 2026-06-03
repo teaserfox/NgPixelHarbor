@@ -6,7 +6,8 @@
         #owlCar>
         <ng-container>
           <ng-template carouselSlide *ngFor="let slide of slider">
-            <div class="main-slider-image" [style.background-image]="'url(assets/images/page/main/' + slide.image + ')'">
+            <div class="main-slider-image"
+                 [style.background-image]="'url(assets/images/page/main/' + slide.image + ')'">
               <a class="move-backward" (click)="owlCar.prev()">
                 <img src="assets/images/page/main/previous.png" alt="">
               </a>
@@ -136,7 +137,22 @@
   </div>
 </section>
 
-<post-blog [posts]="posts"></post-blog>
+<section class="stories" id="stories">
+  <div class="container">
+    <div class="stories-title">
+      Популярные статьи из блога
+    </div>
+    <post-blog [posts]="posts"></post-blog>
+    <a [routerLink]="'/blog'" class="stories-href-blog">
+      Перейти в блог
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M5.44392 1C5.59871 1 5.75349 1.05652 5.87569 1.17765L11.1873 6.44254C12.0508 7.29849 12.0508 8.70353 11.1873 9.55948L5.87569 14.8244C5.63944 15.0585 5.2484 15.0585 5.01215 14.8244C4.7759 14.5902 4.7759 14.2026 5.01215 13.9684L10.3238 8.70353C10.7148 8.31593 10.7148 7.68608 10.3238 7.29849L5.01215 2.0336C4.7759 1.79942 4.7759 1.41182 5.01215 1.17765C5.13435 1.0646 5.28914 1 5.44392 1Z"
+          fill="#709FDC"/>
+      </svg>
+    </a>
+  </div>
+</section>
 
 <section class="reviews" id="reviews">
   <div class="container">

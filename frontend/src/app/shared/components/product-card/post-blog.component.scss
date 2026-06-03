@@ -1,113 +1,101 @@
 @import '../../../../../src/assets/styles/_variables';
 @import '../../../../../src/assets/styles/_mixins';
 
-.stories {
-  margin-top: 120px;
+//.stories {
+//  margin-top: 120px;
 
-  .container {
-    .stories-title {
-      @include head-lora-36;
-      font-size: 38px;
-      margin-bottom: 40px;
-    }
+//.container {
+//.stories-title {
+//  @include head-lora-36;
+//  font-size: 38px;
+//  margin-bottom: 40px;
+//}
 
-    .stories-posts {
-      display: grid;
-      grid-template-columns: repeat(4, 292px);
-      column-gap: 24px;
-      margin-bottom: 40px;
+.stories-posts {
+  display: grid;
+  grid-template-columns: repeat(4, 292px);
+  column-gap: 24px;
+  margin-bottom: 40px;
 
-      &.solutions-content {
-        grid-template-columns: repeat(4, 290px);
-        column-gap: 27px;
-      }
+  &.solutions-content {
+    grid-template-columns: repeat(4, 290px);
+    column-gap: 27px;
+  }
 
-      .stories-posts-post {
-        display: flex;
-        flex-direction: column;
-        height: 100%;
+  .stories-posts-post {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 
-        .stories-posts-post-image {
-          width: 291px;
-          height: 291px;
-          border-radius: 5px;
-          background-size: cover;
-          background-position: center;
-          position: relative;
+    .stories-posts-post-image {
+      width: 291px;
+      height: 291px;
+      border-radius: 5px;
+      background-size: cover;
+      background-position: center;
+      position: relative;
 
-          .button {
-            position: absolute;
-            top: 10px;
-            right: 9px;
-            background: white;
-            color: $two-base-text-color;
-            width: 89px;
-            font-size: 11px;
-            padding: 10px 18px;
-            overflow: hidden;
-            transition: 0.3s ease;
-            cursor: pointer;
+      .button {
+        position: absolute;
+        top: 10px;
+        right: 9px;
+        background: white;
+        color: $two-base-text-color;
+        width: 89px;
+        font-size: 11px;
+        padding: 10px 18px;
+        overflow: hidden;
+        transition: 0.3s ease;
+        cursor: pointer;
 
-            &::before {
-              content: '';
-              position: absolute;
-              top: -50%;
-              left: -75%;
-              width: 50%;
-              height: 200%;
+        &::before {
+          content: '';
+          position: absolute;
+          top: -50%;
+          left: -75%;
+          width: 50%;
+          height: 200%;
 
-              background: rgba(255, 255, 255, 0.6);
-              transform: rotate(25deg);
+          background: rgba(255, 255, 255, 0.6);
+          transform: rotate(25deg);
 
-              transition: 0.6s;
-            }
-
-            &:hover::before {
-              left: 130%;
-            }
-          }
+          transition: 0.6s;
         }
 
-        .stories-posts-post-title {
-          font-size: 20px;
-          color: $two-base-text-color;
-          margin-top: 15px;
-        }
-
-        .stories-posts-post-text {
-          font-weight: 400;
-          font-size: 14px;
-          line-height: 130%;
-          color: $base-text-color;
-          margin-top: 20px;
-          height: 126px;
-          margin-bottom: 20px;
-
-          &.solutions-content-block-description {
-            margin-top: 10px;
-            margin-bottom: 15px;
-            height: 90px;
-          }
-        }
-
-        a {
-          font-weight: 400;
-          text-decoration-line: underline;
-          text-underline-offset: 2px;
-          color: $two-base-text-color;
-          margin-top: auto;
+        &:hover::before {
+          left: 130%;
         }
       }
     }
 
-    .stories-href-blog {
+    .stories-posts-post-title {
       font-size: 20px;
       color: $two-base-text-color;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      column-gap: 14px;
+      margin-top: 15px;
+    }
+
+    .stories-posts-post-text {
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 130%;
+      color: $base-text-color;
+      margin-top: 20px;
+      height: 126px;
+      margin-bottom: 20px;
+
+      &.solutions-content-block-description {
+        margin-top: 10px;
+        margin-bottom: 15px;
+        height: 90px;
+      }
     }
   }
+}
+
+a {
+  font-weight: 400;
+  text-decoration-line: underline;
+  text-underline-offset: 4px;
+  color: $two-base-text-color;
+  margin-top: auto;
 }
