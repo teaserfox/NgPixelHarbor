@@ -1,0 +1,83 @@
+
+@import '../../../../../src/assets/styles/_variables';
+@import '../../../../../src/assets/styles/mixins';
+@import '../../../../../src/assets/styles/personal';
+
+
+.orders {
+  padding-top: 56px;
+  padding-bottom: 156px;
+  .container {
+    font-size: 16px;
+    font-style: normal;
+    color: $base-text-color;
+    .orders-title {
+      margin-bottom: 14px;
+      font-weight: 500;
+    }
+    .orders-title-additional {
+      margin-bottom: 67px;
+    }
+    .cart-empty {
+      margin-top: 20px;
+      margin-bottom: 100px;
+      div {
+        font-size: 16px;
+        color: $base-text-color;
+      }
+      .button {
+        width: 255px;
+        margin-top: 10px;
+      }
+    }
+    .orders-list {
+      .orders-list-item {
+        padding-bottom: 46px;
+        margin-bottom: 47px;
+        border-bottom: $border-color-catalog-filter;
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        &:last-child {
+          padding-bottom: 0;
+          margin-bottom: 0;
+          border-bottom: 0;
+        }
+        .orders-list-item-number {
+          font-size: 20px;
+          text-decoration-line: underline;
+          color: #111111;
+          width: 297px;
+          margin-right: 20px;
+        }
+        .orders-list-item-products {
+          width: 509px;
+          margin-right: 20px;
+          color: $orders-text-color;
+          .orders-list-item-products-count {
+            margin-bottom: 12px;
+          }
+          .orders-list-item-product-list tr td:first-child {
+            padding-left: 10px;
+            padding-right: 20px;
+          }
+        }
+        .orders-list-item-status {
+          padding: 8px 24px;
+          text-align: center;
+          border-radius: 50px;
+          border: $border--color-orders-status;
+          box-sizing: border-box;
+          background: transparent;
+          color: $orders-text-status;
+        }
+        .orders-list-item-price {
+          width: 186px;
+          text-align: right;
+          font-weight: 600;
+          font-size: 22px;
+        }
+      }
+    }
+  }
+}

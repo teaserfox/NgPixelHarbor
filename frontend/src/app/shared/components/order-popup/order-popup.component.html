@@ -1,0 +1,48 @@
+
+  <div class="order-popup">
+    <div class="order-popup-close" (click)="closePopup()">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <line x1="1.93562" y1="2.6499" x2="13.9564" y2="14.6707" stroke="#BEBEBE" stroke-linecap="round"/>
+        <line x1="13.9236" y1="2.62971" x2="1.90277" y2="14.6505" stroke="#BEBEBE" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div class="order-popup-title">
+      {{ data?.service ? 'Заявка на услугу' : 'Закажите бесплатную консультацию!' }}
+    </div>
+    <form [formGroup]="form"
+          (ngSubmit)="sendOrder()"
+          class="auth-inputs">
+      <div class="auth-input" *ngIf="data?.mode === 'service'">
+        <input
+          type="text"
+          class="input"
+          [value]="data?.service"
+          readonly
+        >
+      </div>
+      <div class="auth-input" *ngIf="data?.mode === 'select'">
+        <select class="input" formControlName="service">
+          <option value="" disabled></option>
+
+          <option *ngFor="let item of data?.servicesList" [value]="item">
+            {{ item }}
+          </option>
+        </select>
+      </div>
+      <div class="auth-input">
+        <input type="text" class="input"
+               [ngStyle]="{'border-color': form.get('name')?.invalid
+           && (form.get('name')?.dirty || form.get('name')?.touched) ? 'red' : ''}"
+               placeholder="Ваше имя" formControlName="name">
+      </div>
+      <div class="auth-input">
+        <input type="tel" class="input"
+               [ngStyle]="{'border-color': form.get('phone')?.invalid
+           && (form.get('phone')?.dirty || form.get('phone')?.touched) ? 'red' : ''}"
+               placeholder="Ваш номер телефона" formControlName="phone"
+               mask="+0 (000) 000-00-00" [dropSpecialCharacters]="true">
+      </div>
+      <button class="button" type="submit">{{ data?.mode === 'service' ? 'Оставить заявку' : 'Заказать консультацию' }}</button>
+    </form>
+  </div>
+

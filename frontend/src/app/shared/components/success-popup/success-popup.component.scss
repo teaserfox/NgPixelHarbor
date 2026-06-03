@@ -1,0 +1,41 @@
+@import "../../../../assets/styles/mixins";
+@import "../../../../assets/styles/variables";
+
+
+.success-popup {
+  border-radius: 10px;
+  overflow: hidden;
+  border: $border-color-input;
+  box-sizing: border-box;
+  max-width: 727px;
+  position: relative;
+  padding: 163px 140px;
+  text-align: center;
+  .success-popup-close {
+    cursor: pointer;
+    svg {
+      position: absolute;
+      top: 30px;
+      right: 30px;
+    }
+  }
+  .success-popup-title {
+    @include head-lora-36;
+    font-size: 38px;
+    margin-bottom: 20px;
+    font-weight: 400;
+  }
+  .success-popup-text {
+    text-align: center;
+    margin-bottom: 40px;
+    font-weight: 500;
+    font-size: 14px;
+    color: $base-text-color;
+  }
+  .button {
+    width: 74px;
+    font-weight: 500;
+    font-size: 12px;
+    padding: 10px 20px;
+  }
+}
