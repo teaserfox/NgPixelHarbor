@@ -10,7 +10,7 @@ class TokenUtils {
             const accessToken = jwt.sign(
                 payload,
                 config.secret,
-                {expiresIn: rememberMe ? "2h" : "10d"}
+                {expiresIn: rememberMe ? "10d" : "1d"}
             );
             const refreshToken = jwt.sign(
                 payload,
@@ -26,19 +26,27 @@ class TokenUtils {
 
     static verifyRefreshToken(refreshToken) {
         return new Promise(async (resolve, reject) => {
-            const user = await UserModel.findOne({refreshToken: refreshToken});
-            if (!user) {
-                return reject({error: true, message: "Токен не валиден"});
-            }
-
-            jwt.verify(refreshToken, config.secret, (err, tokenDetails) => {
-                if (err)
-                    return reject({error: true, message: "Токен не валиден"});
-                resolve({
-                    tokenDetails,
-                    error: false,
-                    message: "Valid refresh token",
-                });
+            // Сначала проверяем валидность токена через JWT
+            jwt.verify(refreshToken, config.secret, async (err, tokenDetails) => {
+                if (err) {
+                    return reject(new Error("Токен не валиден"));
+                }
+                
+                // Затем проверяем, существует ли пользователь с таким токеном в БД
+                try {
+                    const user = await UserModel.findOne({refreshToken: refreshToken});
+                    if (!user) {
+                        return reject(new Error("Токен не валиден"));
+                    }
+                    
+                    resolve({
+                        tokenDetails,
+                        error: false,
+                        message: "Valid refresh token",
+                    });
+                } catch (dbError) {
+                    return reject(new Error("Ошибка при проверке токена"));
+                }
             });
         });
     }

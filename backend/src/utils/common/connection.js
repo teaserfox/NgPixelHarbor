@@ -17,7 +17,13 @@ class MongoDBConnection {
          mongoose.connect(config.db.dbUrl, {
             dbName: config.db.dbName,
             useNewUrlParser: true,
-        }).then();
+        }).then(() => {
+            // Connection successful
+        }).catch((error) => {
+            console.log('MongoDB connection error:', error);
+            this.isConnected = false;
+            return result(error, null);
+        });
         const db = mongoose.connection;
 
         db.once('open', () => {

@@ -1,24 +1,9 @@
 const crypto = require('crypto');
 const mongoose = require('mongoose');
 const randomBytesNum = 128;
-const DeliveryInfoSchema = new mongoose.Schema({
-    street: {
-        type: String,
-    },
-    house: {
-        type: String,
-    },
-    entrance: {
-        type: String,
-    },
-    apartment: {
-        type: String,
-    },
-});
+
 const UserSchema = new mongoose.Schema({
-    firstName: String,
-    lastName: String,
-    fatherName: String,
+    name: String,
     email: {
         type: String,
         required: 'e-mail is required',
@@ -27,10 +12,6 @@ const UserSchema = new mongoose.Schema({
     salt: String,
     passwordHash: String,
     refreshToken: String,
-    phone: String,
-    deliveryInfo: DeliveryInfoSchema,
-    paymentType: String,
-    deliveryType: String,
 }, {
     timestamps: true,
 });
@@ -44,10 +25,6 @@ UserSchema.methods.checkPassword = function (password) {
     }
 
     const hash = crypto.pbkdf2Sync(password, this.salt, 1, randomBytesNum, 'sha1');
-    if (hash.toString() === this.passwordHash) {
-        return true;
-    }
-
     return hash.toString('base64') === this.passwordHash;
 };
 UserSchema.methods.setPassword = function (password) {

@@ -1,17 +1,6 @@
 const passport = require('passport');
 
 class Auth {
-    static authenticateIfTokenExist(req, res, next) {
-        if (req.headers['x-access-token']) {
-            passport.authenticate('jwt',
-                (err, user, authenticateError) =>
-                    Auth.processAuthenticate(req, res, next, err, user, authenticateError))(req, res, next);
-        } else {
-            req.user = null;
-            return next();
-        }
-    }
-
     static authenticate(req, res, next) {
         passport.authenticate('jwt',
             (err, user, authenticateError) =>
@@ -20,14 +9,22 @@ class Auth {
 
     static processAuthenticate(req, res, next, err, user, authenticateError) {
         if (authenticateError) {
-            return next(new Error(authenticateError.message));
+            const error = new Error(authenticateError.message);
+            error.status = 401;
+            return next(error);
         }
         if (err) {
+            // Если ошибка уже имеет статус, оставляем его, иначе ставим 401
+            if (!err.status && !err.statusCode) {
+                err.status = 401;
+            }
             return next(err);
         }
         // Check User
         if (!user) {
-            return next(new Error('User unauthorized'));
+            const error = new Error('User unauthorized');
+            error.status = 401;
+            return next(error);
         }
 
         req.user = user;

@@ -81,6 +81,14 @@ class AuthController {
         try {
             const {tokenDetails} = await TokenUtils.verifyRefreshToken(req.body.refreshToken);
             const user = await UserModel.findOne({email: tokenDetails.email});
+
+            // ⚠ Критичная проверка: пользователь мог быть удалён
+            if (!user) {
+                return res
+                    .status(401)
+                    .json({ error: true, message: "Пользователь не найден" });
+            }
+
             const {accessToken, refreshToken} = await TokenUtils.generateTokens(user);
             user.refreshToken = refreshToken;
             await user.save();
@@ -91,7 +99,8 @@ class AuthController {
                 userId: user.id,
             });
         } catch (e) {
-            return res.status(400).json({
+            // Невалидный или истекший токен должен возвращать 401
+            return res.status(401).json({
                 error: true,
                 message: e.message,
             });
@@ -106,7 +115,8 @@ class AuthController {
             }
             const user = await UserModel.findOne({refreshToken: req.body.refreshToken});
             if (!user) {
-                return res.status(404).json({error: true, message: "Пользователя не существует"});
+                // Если токен не найден, это может быть невалидный токен - возвращаем 401
+                return res.status(401).json({error: true, message: "Невалидный токен"});
             }
             user.refreshToken = null;
             await user.save();

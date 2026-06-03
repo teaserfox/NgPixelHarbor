@@ -5,16 +5,19 @@ module.exports = {
     const cyrillicToTranslit = new CyrillicToTranslit();
     let categories = [
       {
-        name: 'Комнатные растения',
+        name: 'Фриланс',
       },
       {
-        name: 'Флорариумы',
+        name: 'Дизайн',
       },
       {
-        name: 'Сухоцветы',
+        name: 'SMM',
       },
       {
-        name: 'Кашпо и горшки',
+        name: 'Таргет',
+      },
+      {
+        name: 'Копирайтинг',
       },
     ];
     categories = categories.map(item => {
@@ -22,77 +25,7 @@ module.exports = {
       return item;
     });
 
-    const categoriesResult = await db.collection('categories').insertMany(categories);
-
-    let types = [
-      {
-        name: 'Кактусы',
-        category: categoriesResult.insertedIds['0']
-      },
-      {
-        name: 'Суккуленты',
-        category: categoriesResult.insertedIds['0']
-      },
-      {
-        name: 'Эхеверии',
-        category: categoriesResult.insertedIds['0']
-      },
-      {
-        name: 'Цветущие комнатные растения',
-        category: categoriesResult.insertedIds['0']
-      },
-      {
-        name: 'Пальмы домашние',
-        category: categoriesResult.insertedIds['0']
-      },
-      {
-        name: 'Маленький',
-        category: categoriesResult.insertedIds['1']
-      },
-      {
-        name: 'Средний',
-        category: categoriesResult.insertedIds['1']
-      },
-      {
-        name: 'Большой',
-        category: categoriesResult.insertedIds['1']
-      },
-      {
-        name: 'Хлопок',
-        category: categoriesResult.insertedIds['2']
-      },
-      {
-        name: 'Лаванда',
-        category: categoriesResult.insertedIds['2']
-      },
-      {
-        name: 'Букеты',
-        category: categoriesResult.insertedIds['2']
-      },
-      {
-        name: 'Кашпо керамическое',
-        category: categoriesResult.insertedIds['3']
-      },
-      {
-        name: 'Кашпо металлическое',
-        category: categoriesResult.insertedIds['3']
-      },
-      {
-        name: 'Кашпо бетонное',
-        category: categoriesResult.insertedIds['3']
-      },
-      {
-        name: 'Ваза керамическая',
-        category: categoriesResult.insertedIds['3']
-      },
-    ];
-
-    types = types.map(item => {
-      item.url = cyrillicToTranslit.transform(item.name, "_").toLowerCase();
-      return item;
-    });
-
-    await db.collection('types').insertMany(types);
+    await db.collection('categories').insertMany(categories);
   },
 
   async down(db, client) {
