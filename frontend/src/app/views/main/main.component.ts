@@ -217,8 +217,7 @@ export class MainComponent implements OnInit {
   ngOnInit(): void {
     this.postService.getPost()
       .subscribe((data) => {
-        const result = checkResponse<PostType[]>(data);
-        this.posts = result;
+        this.posts = checkResponse<PostType[]>(data);
       });
   }
 

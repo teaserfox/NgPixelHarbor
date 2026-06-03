@@ -15,4 +15,8 @@ export class PostService {
   getPost(): Observable<PostType[] | DefaultResponseType> {
     return this.http.get<PostType[] | DefaultResponseType>(environment.api + 'articles/top');
   }
+
+  getPostAll(): Observable<PostType[] | DefaultResponseType> {
+    return this.http.get<PostType[] | DefaultResponseType>(environment.api + 'articles');
+  }
 }

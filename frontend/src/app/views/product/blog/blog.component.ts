@@ -181,10 +181,12 @@ export class BlogComponent implements OnInit {
    this.activeParams.sort = this.activeParams.sort.filter(
      item => item !== appliedFilter.urlParam
    );
-    this.router.navigate(['/blog'], {
-      queryParams: {
-        sort: this.activeParams.sort
-      }
+    this.preserveScroll(() => {
+      this.router.navigate(['/blog'], {
+        queryParams: {
+          sort: this.activeParams.sort
+        }
+      });
     });
   }
 
@@ -255,6 +257,16 @@ export class BlogComponent implements OnInit {
 
   trackById(index: number, item: PostType) {
     return item.id;
+  }
+
+  private preserveScroll(fn: () => void) {
+    const y = window.scrollY;
+
+    fn();
+
+    setTimeout(() => {
+      window.scrollTo(0, y);
+    }, 0);
   }
 
 }
