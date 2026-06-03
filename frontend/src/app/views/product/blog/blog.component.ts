@@ -64,6 +64,16 @@ export class BlogComponent implements OnInit {
           } else {
             this.activeParams.sort = [sort];
           }
+
+          this.appliedFilters = this.activeParams.sort.map(
+            url => {
+              const category = this.sortingOpens.find(item => item.url === url);
+              return {
+                name: category?.name || url,
+                urlParam: url
+              };
+            }
+          )
         });
       });
 
@@ -126,7 +136,7 @@ export class BlogComponent implements OnInit {
             if (!this.activeParams.page) {
               this.activeParams.page = 1;
             }
-            this.appliedFilters = [];
+            // this.appliedFilters = [];
             this.activeParams.sort.forEach(url => {
               const category = this.sortingOpens.find(
                 item => item.url === url
@@ -165,8 +175,7 @@ export class BlogComponent implements OnInit {
   }
 
   removeAppliedFilter(appliedFilter: AppliedFilterType) {
-   this.appliedFilters =
-   this.appliedFilters.filter(
+   this.appliedFilters = this.appliedFilters.filter(
      item => item.urlParam !== appliedFilter.urlParam
    );
    this.activeParams.sort = this.activeParams.sort.filter(

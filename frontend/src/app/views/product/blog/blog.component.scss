@@ -15,18 +15,18 @@
       display: flex;
       justify-content: space-between;
       align-items: baseline;
-      margin-left: 317px;
+
 
       .catalog-applied-filters {
         display: flex;
         flex-wrap: wrap;
 
         .catalog-applied-filter {
-          border-radius: 50px;
-          border: $border-color-catalog-filter;
+          border-radius: 5px;
+          border: $border-color-input;
           font-size: 16px;
-          color: $base-text-color;
-          padding: 8px 14px;
+          color: $two-base-text-color;
+          padding: 8px 20px;
           display: flex;
           align-items: center;
           margin-right: 15px;
