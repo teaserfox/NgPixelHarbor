@@ -1,15 +1,10 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {PostType} from "../../../../types/post.type";
 import {environment} from "../../../../environments/environment";
-import {CartService} from "../../services/cart.service";
-import {CartType} from "../../../../types/cart.type";
-import {DefaultResponseType} from "../../../../types/default-response.type";
-import {FavoriteType} from "../../../../types/favorite.type";
-import {AuthService} from "../../../core/auth/auth.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {PostService} from "../../services/post.service";
 import {Router} from "@angular/router";
-import {checkResponse} from "../../helpers/response.helper";
+
 
 @Component({
   selector: 'post-blog',
@@ -23,19 +18,13 @@ export class PostBlogComponent implements OnInit {
   serverStaticPath = environment.serverStaticPath;
 
 
-  constructor(private postService: PostService,
+  constructor(
               private favoriteService: PostService,
               private snackBar: MatSnackBar,
               private router: Router) {
   }
 
   ngOnInit(): void {
-    this.postService.getPost()
-      .subscribe(posts => {
-        const result = checkResponse<PostType[]>(posts);
-        this.posts = result;
-      })
-
   }
 
   // addToCart() {
