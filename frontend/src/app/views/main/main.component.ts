@@ -19,9 +19,11 @@ export class MainComponent implements OnInit {
   @ViewChild('owlCar', {static: false}) owlCar!: CarouselComponent;
   @ViewChild('owlCarRev', {static: false}) owlCarRev!: CarouselComponent;
 
+
   posts: PostType[] = [];
   serverStaticPath = environment.serverStaticPath;
   reviewsStaticPath = 'assets/images/page/reviews/';
+
 
   customOptions: OwlOptions = {
     items: 1,
@@ -209,10 +211,10 @@ export class MainComponent implements OnInit {
     },
   ];
 
+
   constructor(private postService: PostService,
               private dialog: MatDialog) {
   }
-
 
   ngOnInit(): void {
     this.postService.getPost()

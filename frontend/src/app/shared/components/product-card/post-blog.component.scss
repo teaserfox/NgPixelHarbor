@@ -1,20 +1,11 @@
 @import '../../../../../src/assets/styles/_variables';
 @import '../../../../../src/assets/styles/_mixins';
 
-//.stories {
-//  margin-top: 120px;
-
-//.container {
-//.stories-title {
-//  @include head-lora-36;
-//  font-size: 38px;
-//  margin-bottom: 40px;
-//}
-
 .stories-posts {
   display: grid;
   grid-template-columns: repeat(4, 292px);
   column-gap: 24px;
+  row-gap: 40px;
   margin-bottom: 40px;
 
   &.solutions-content {
@@ -41,12 +32,13 @@
         right: 9px;
         background: white;
         color: $two-base-text-color;
-        width: 89px;
+        box-sizing: border-box;
         font-size: 11px;
         padding: 10px 18px;
         overflow: hidden;
         transition: 0.3s ease;
         cursor: pointer;
+        box-shadow: 0 2px 16px rgba(7, 23, 57, 0.08);
 
         &::before {
           content: '';

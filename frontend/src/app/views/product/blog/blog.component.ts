@@ -1,19 +1,16 @@
 import {Component, ElementRef, HostListener, OnInit} from '@angular/core';
-import {ProductService} from "../../../shared/services/product.service";
 import {PostType} from "../../../../types/post.type";
 import {CategoryService} from "../../../shared/services/category.service";
-import {CategoryWithTypeType} from "../../../../types/category-with-type.type";
 import {ActivatedRoute, Router} from "@angular/router";
 import {ActiveParamsType} from "../../../../types/active-params.type";
 import {AppliedFilterType} from "../../../../types/applied-filter";
 import {CartService} from "../../../shared/services/cart.service";
 import {CartType} from "../../../../types/cart.type";
 import {PostService} from "../../../shared/services/post.service";
-import {FavoriteType} from "../../../../types/favorite.type";
-import {DefaultResponseType} from "../../../../types/default-response.type";
 import {AuthService} from "../../../core/auth/auth.service";
 import {checkResponse} from "../../../shared/helpers/response.helper";
 import {CategoryType} from "../../../../types/category.type";
+import {PostsResponseType} from "../../../../types/post-response.type";
 
 
 @Component({
@@ -26,7 +23,6 @@ export class BlogComponent implements OnInit {
 
   posts: PostType[] = [];
   sortingOpens: CategoryType[] = [];
-  categoriesWithTypes: CategoryWithTypeType[] = [];
   activeParams: ActiveParamsType = {
     types: [],
     sort: []
@@ -36,13 +32,9 @@ export class BlogComponent implements OnInit {
   pages: number[] = [];
   loading = true;
   cart: CartType | null = null;
-  favoriteProducts: FavoriteType[] | null = null;
 
-  constructor(private productService: ProductService,
-              private categoryService: CategoryService,
+  constructor(private categoryService: CategoryService,
               private activatedRoute: ActivatedRoute,
-              private cartService: CartService,
-              private favoriteService: PostService,
               private authService: AuthService,
               private elementRef: ElementRef,
               private postService: PostService,
@@ -50,69 +42,23 @@ export class BlogComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.postService.getPostAll()
-      .subscribe((data) => {
-        this.posts = checkResponse<PostType[]>(data);
-      });
 
     this.categoryService.getCategories()
       .subscribe(data => {
-        const result = checkResponse<CategoryType[]>(data);
-        this.sortingOpens = result;
-        this.activatedRoute.queryParams.subscribe(params => {
-
-          const sort = params['sort'];
-
-          if (!sort) {
-            this.activeParams.sort = [];
-          } else if (Array.isArray(sort)) {
-            this.activeParams.sort = sort;
-          } else {
-            this.activeParams.sort = [sort];
-          }
-
-          this.appliedFilters = this.activeParams.sort.map(
-            url => {
-              const category = this.sortingOpens.find(item => item.url === url);
-              return {
-                name: category?.name || url,
-                urlParam: url
-              };
-            }
-          )
-        });
-      });
-
-    this.cartService.getCart()
-      .subscribe((data: CartType  | DefaultResponseType) => {
-
-        if ((data as DefaultResponseType).error !== undefined) {
-          throw new Error((data as DefaultResponseType).message);
-        }
-        this.cart = data as CartType;
-
-        // if (this.authService.isLogged$.value) {
-        //   this.favoriteService.getFavorites()
-        //     .subscribe(
-        //       {
-        //         next: (data: FavoriteType[] | DefaultResponseType) => {
-        //           if ((data as DefaultResponseType).error !== undefined) {
-        //             const error = (data as DefaultResponseType).message;
-        //             this.processCatalog();
-        //             throw new Error(error);
-        //           }
-        //           this.favoriteProducts = data as FavoriteType[];
-        //           this.processCatalog();
-        //         },
-        //         error: (error) => {
-        //           this.processCatalog();
-        //         }
-        //
-        //       });
-        // } else
-        {
-          this.processCatalog();
-        }
+        this.sortingOpens = checkResponse<CategoryType[]>(data);
+        this.activatedRoute.queryParams
+          .subscribe(params => {
+            const sort = params['sort'];
+            const page = params['page'];
+            this.activeParams.sort = Array.isArray(sort)
+              ? sort
+              : sort
+                ? [sort]
+                : [];
+            this.activeParams.page = page ? +page : 1;
+            this.updateAppliedFilters();
+            this.loadPosts();
+          });
       });
   }
 
@@ -127,66 +73,50 @@ export class BlogComponent implements OnInit {
     }
   }
 
-  processCatalog() {
-    this.categoryService.getCategoriesWithTypes()
-      .subscribe(data => {
-        this.categoriesWithTypes = data;
 
-        this.activatedRoute.queryParams
-          .pipe(
-            // debounceTime(100)
-          )
-          .subscribe(params => {
-            this.loading = true;
-            // this.activeParams = ActiveParamsUtil.processParams(params);
-            if (!this.activeParams.page) {
-              this.activeParams.page = 1;
-            }
-            // this.appliedFilters = [];
-            this.activeParams.sort.forEach(url => {
-              const category = this.sortingOpens.find(
-                item => item.url === url
-              );
-              if (category) {
-                this.appliedFilters.push({
-                  name: category.name,
-                  urlParam: category.url
-                });
-              }
-            });
-            this.productService.getProducts(this.activeParams)
-              .subscribe(data => {
+  private loadPosts(): void {
+    this.loading = true;
 
-                this.pages = Array.from({ length: data.pages }, (_, i) => i + 1);
+    this.postService.getPostAll(this.activeParams)
+      .subscribe((data: PostsResponseType) => {
 
-                this.posts = data.items.map(product => {
+        const posts = data.items;
+        this.pages = Array.from({ length: data.pages }, (_, i) => i + 1);
 
-                  const productInCart = this.cart?.items?.find(
-                    item => item.product.id === product.id
-                  );
-                  // product.countInCart = productInCart ? productInCart.quantity : 0;
+        if (!this.activeParams.sort.length) {
+          this.posts = posts;
+        } else {
+          const selectedCategories = this.sortingOpens
+            .filter(c => this.activeParams.sort.includes(c.url))
+            .map(c => c.name);
 
-                  const productInFavorite = this.favoriteProducts?.find(
-                    item => item.id === product.id
-                  );
-                  // product.isInFavorite = !!productInFavorite;
+          this.posts = posts.filter(post =>
+            selectedCategories.includes(post.category)
+          );
+        }
 
-                  return product;
-                });
-
-                this.loading = false;
-              });
-          });
+        this.loading = false;
       });
   }
 
+  private updateAppliedFilters(): void {
+    this.appliedFilters = this.activeParams.sort.map(url => {
+      const category = this.sortingOpens.find(c => c.url === url);
+
+      return {
+        name: category?.name || url,
+        urlParam: url
+      };
+    });
+  }
+
   removeAppliedFilter(appliedFilter: AppliedFilterType) {
-   this.appliedFilters = this.appliedFilters.filter(
-     item => item.urlParam !== appliedFilter.urlParam
-   );
-   this.activeParams.sort = this.activeParams.sort.filter(
-     item => item !== appliedFilter.urlParam
-   );
+    this.appliedFilters = this.appliedFilters.filter(
+      item => item.urlParam !== appliedFilter.urlParam
+    );
+    this.activeParams.sort = this.activeParams.sort.filter(
+      item => item !== appliedFilter.urlParam
+    );
     this.preserveScroll(() => {
       this.router.navigate(['/blog'], {
         queryParams: {
@@ -201,62 +131,50 @@ export class BlogComponent implements OnInit {
   }
 
   sort(category: CategoryType): void {
-    if (!this.activeParams.sort) {
-      this.activeParams.sort = [];
-    }
-    const exists = this.activeParams.sort.includes(category.url);
+    const current = [...this.activeParams.sort];
 
-    if (exists) {
+    const exists = current.includes(category.url);
 
-      this.activeParams.sort =
-        this.activeParams.sort.filter(
-          item => item !== category.url
-        );
-
-      this.appliedFilters =
-        this.appliedFilters.filter(
-          item => item.urlParam !== category.url
-        );
-
-    } else {
-
-      this.activeParams.sort.push(category.url);
-
-      this.appliedFilters.push({
-        name: category.name,
-        urlParam: category.url
-      });
-
-    }
+    const updated = exists
+      ? current.filter(c => c !== category.url)
+      : [...current, category.url];
 
     this.router.navigate(['/blog'], {
-      queryParams: {
-        sort: this.activeParams.sort
-      }
+      queryParams: {sort: updated}
     });
   }
 
   openPage(page: number) {
-    this.activeParams.page = page;
-    this.router.navigate(['/catalog'], {
-      queryParams: this.activeParams
+    this.router.navigate(['/blog'], {
+      queryParams: {
+        ...this.activeParams,
+        page
+      }
     });
   }
 
   openPrevPage() {
     if (this.activeParams.page && this.activeParams.page > 1) {
-      this.activeParams.page--;
-      this.router.navigate(['/catalog'], {
-        queryParams: this.activeParams
+      const page = this.activeParams.page - 1;
+
+      this.router.navigate(['/blog'], {
+        queryParams: {
+          ...this.activeParams,
+          page
+        }
       });
     }
   }
 
   openNextPage() {
     if (this.activeParams.page && this.activeParams.page < this.pages.length) {
-      this.activeParams.page++;
-      this.router.navigate(['/catalog'], {
-        queryParams: this.activeParams
+      const page = this.activeParams.page + 1;
+
+      this.router.navigate(['/blog'], {
+        queryParams: {
+          ...this.activeParams,
+          page
+        }
       });
     }
   }
