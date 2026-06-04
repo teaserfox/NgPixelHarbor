@@ -1,6 +1,6 @@
 export type ActiveParamsType = {
   sort: string[];
-  page?: number;
+  page: number;
   types: string[];
 }
 

@@ -13,7 +13,7 @@ import { OrderPopupComponent } from './components/order-popup/order-popup.compon
 import { SuccessPopupComponent } from './components/success-popup/success-popup.component';
 import {NgxMaskModule} from "ngx-mask";
 import { TruncatePipe } from './pipes/truncate.pipe';
-import {PostBlogComponent} from "./components/product-card/post-blog.component";
+import {PostBlogComponent} from "./components/post-blog/post-blog.component";
 
 
 

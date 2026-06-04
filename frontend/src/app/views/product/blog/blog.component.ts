@@ -25,7 +25,8 @@ export class BlogComponent implements OnInit {
   sortingOpens: CategoryType[] = [];
   activeParams: ActiveParamsType = {
     types: [],
-    sort: []
+    sort: [],
+    page: 1
   };
   appliedFilters: AppliedFilterType[] = [];
   sortingOpen = false;
