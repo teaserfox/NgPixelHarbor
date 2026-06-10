@@ -4,9 +4,8 @@ import {CategoryService} from "../../../shared/services/category.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {ActiveParamsType} from "../../../../types/active-params.type";
 import {AppliedFilterType} from "../../../../types/applied-filter";
-import {CartService} from "../../../shared/services/cart.service";
-import {CartType} from "../../../../types/cart.type";
-import {PostService} from "../../../shared/services/post.service";
+import {ArticleType} from "../../../../types/article.type";
+import {ArticlesService} from "../../../shared/services/articles.service";
 import {AuthService} from "../../../core/auth/auth.service";
 import {checkResponse} from "../../../shared/helpers/response.helper";
 import {CategoryType} from "../../../../types/category.type";
@@ -32,13 +31,13 @@ export class BlogComponent implements OnInit {
   sortingOpen = false;
   pages: number[] = [];
   loading = true;
-  cart: CartType | null = null;
+  cart: ArticleType | null = null;
 
   constructor(private categoryService: CategoryService,
               private activatedRoute: ActivatedRoute,
               private authService: AuthService,
               private elementRef: ElementRef,
-              private postService: PostService,
+              private articlesService: ArticlesService,
               private router: Router) {
   }
 
@@ -78,23 +77,14 @@ export class BlogComponent implements OnInit {
   private loadPosts(): void {
     this.loading = true;
 
-    this.postService.getPostAll(this.activeParams)
+    this.articlesService.getPostAll(this.activeParams)
       .subscribe((data: PostsResponseType) => {
 
-        const posts = data.items;
-        this.pages = Array.from({ length: data.pages }, (_, i) => i + 1);
-
-        if (!this.activeParams.sort.length) {
-          this.posts = posts;
-        } else {
-          const selectedCategories = this.sortingOpens
-            .filter(c => this.activeParams.sort.includes(c.url))
-            .map(c => c.name);
-
-          this.posts = posts.filter(post =>
-            selectedCategories.includes(post.category)
-          );
-        }
+        this.posts = data.items;
+        this.pages = Array.from(
+          { length: data.pages },
+          (_, i) => i + 1
+        );
 
         this.loading = false;
       });
@@ -119,7 +109,7 @@ export class BlogComponent implements OnInit {
       item => item !== appliedFilter.urlParam
     );
     this.preserveScroll(() => {
-      this.router.navigate(['/blog'], {
+      this.router.navigate(['/articles'], {
         queryParams: {
           sort: this.activeParams.sort
         }
@@ -132,21 +122,23 @@ export class BlogComponent implements OnInit {
   }
 
   sort(category: CategoryType): void {
+    console.log('click sort', category);
+
     const current = [...this.activeParams.sort];
-
     const exists = current.includes(category.url);
-
     const updated = exists
       ? current.filter(c => c !== category.url)
       : [...current, category.url];
 
-    this.router.navigate(['/blog'], {
+    this.router.navigate(['/articles'], {
       queryParams: {sort: updated}
     });
   }
 
   openPage(page: number) {
-    this.router.navigate(['/blog'], {
+    console.log('open page', page);
+
+    this.router.navigate(['/articles'], {
       queryParams: {
         ...this.activeParams,
         page
@@ -158,7 +150,7 @@ export class BlogComponent implements OnInit {
     if (this.activeParams.page && this.activeParams.page > 1) {
       const page = this.activeParams.page - 1;
 
-      this.router.navigate(['/blog'], {
+      this.router.navigate(['articles'], {
         queryParams: {
           ...this.activeParams,
           page
@@ -171,7 +163,7 @@ export class BlogComponent implements OnInit {
     if (this.activeParams.page && this.activeParams.page < this.pages.length) {
       const page = this.activeParams.page + 1;
 
-      this.router.navigate(['/blog'], {
+      this.router.navigate(['/articles'], {
         queryParams: {
           ...this.activeParams,
           page

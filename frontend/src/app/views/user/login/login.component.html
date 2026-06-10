@@ -7,15 +7,29 @@
       <div class="auth-inputs">
         <div class="auth-input">
           <input type="text" class="input"
-                 [ngStyle]="{'border-color': loginForm.get('email')?.invalid
-                 && (loginForm.get('email')?.dirty || loginForm.get('email')?.touched) ? 'red' : ''}"
-                 placeholder="Электронная почта" formControlName="email">
+                 [appInputError]="loginForm.get('email')"
+                 placeholder="Электронная почта"
+                 formControlName="email"
+                 (focus)="activeField = 'email'"
+                 (blur)="activeField = null">
+          <div
+            class="field-hint"
+            *ngIf="activeField === 'email' && loginForm.get('email')?.invalid">
+            {{ getError('email') }}
+          </div>
         </div>
         <div class="auth-input">
           <input type="password" class="input"
-                 [ngStyle]="{'border-color': loginForm.get('password')?.invalid
-                 && (loginForm.get('password')?.dirty || loginForm.get('password')?.touched) ? 'red' : ''}"
-                 placeholder="Пароль" formControlName="password">
+                 [appInputError]="loginForm.get('password')"
+                 placeholder="Пароль"
+                 formControlName="password"
+                 (focus)="activeField = 'password'"
+                 (blur)="activeField = null">
+          <div
+            class="field-hint"
+            *ngIf="activeField === 'password' && loginForm.get('password')?.invalid">
+            {{ getError('password') }}
+          </div>
         </div>
         <div class="auth-checkbox">
           <input type="checkbox" id="remember" formControlName="rememberMe">

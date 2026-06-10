@@ -4,6 +4,7 @@ import {SuccessPopupComponent} from "../success-popup/success-popup.component";
 import {AbstractControl, FormBuilder, Validators} from "@angular/forms";
 import {RequestService} from "../../services/request.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {FormErrorsHelper} from "../../helpers/form-errors.helper";
 
 @Component({
   selector: 'app-order-popup',
@@ -17,6 +18,8 @@ export class OrderPopupComponent implements OnInit {
     phone: ['', [Validators.required, this.phoneValidator]],
     service: ['']
   });
+
+  activeField: 'name' | 'phone' | null = null;
 
   constructor(private dialogRef: MatDialogRef<OrderPopupComponent>,
               private fb: FormBuilder,
@@ -32,6 +35,13 @@ export class OrderPopupComponent implements OnInit {
         service: this.data.preselectedService
       });
     }
+  }
+
+  getError(field: string): string {
+    return FormErrorsHelper.getError(
+      this.form.get(field),
+      field
+    );
   }
 
   phoneValidator(control: AbstractControl) {

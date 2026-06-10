@@ -7,6 +7,7 @@ import {HttpErrorResponse} from "@angular/common/http";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {Router} from "@angular/router";
 import {UserService} from "../../../shared/services/user.service";
+import {FormErrorsHelper} from "../../../shared/helpers/form-errors.helper";
 
 @Component({
   selector: 'app-login',
@@ -16,10 +17,12 @@ import {UserService} from "../../../shared/services/user.service";
 export class LoginComponent implements OnInit {
 
   loginForm = this.fb.group({
-    email: ['', [Validators.required, Validators.email]],
+    email: ['', [Validators.required, Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/)]],
     password: ['', [Validators.required]],
     rememberMe: [false],
   })
+
+  activeField: 'email' | 'password' | null = null;
 
   constructor(private fb: FormBuilder,
               private authService: AuthService,
@@ -29,6 +32,13 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
+  }
+
+  getError(field: string): string {
+    return FormErrorsHelper.getError(
+      this.loginForm.get(field),
+      field === 'password' ? 'loginPassword' : field
+    );
   }
 
 

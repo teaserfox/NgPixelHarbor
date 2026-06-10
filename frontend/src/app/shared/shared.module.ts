@@ -1,7 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {PasswordRepeatDirective} from "./directives/password-repeat.directive";
-
 import {RouterModule} from "@angular/router";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { CountSelectorComponent } from './components/count-selector/count-selector.component';
@@ -14,13 +12,14 @@ import { SuccessPopupComponent } from './components/success-popup/success-popup.
 import {NgxMaskModule} from "ngx-mask";
 import { TruncatePipe } from './pipes/truncate.pipe';
 import {PostBlogComponent} from "./components/post-blog/post-blog.component";
+import {InputErrorDirective} from "./directives/input-error.directive";
 
 
 
 @NgModule({
   declarations:
     [
-      PasswordRepeatDirective,
+      InputErrorDirective,
       PostBlogComponent,
       CountSelectorComponent,
       IfAuthDirective,
@@ -40,7 +39,7 @@ import {PostBlogComponent} from "./components/post-blog/post-blog.component";
     NgxMaskModule,
   ],
   exports: [
-    PasswordRepeatDirective,
+    InputErrorDirective,
     PostBlogComponent,
     CountSelectorComponent,
     IfAuthDirective,

@@ -9,6 +9,6 @@
     <div class="stories-posts-post-text">
       {{ post.description | truncate:32 }}
     </div>
-    <a [routerLink]="'/related/' + post.url">Читать дальше</a>
+    <a [routerLink]="['/articles', post.url]">Читать дальше</a>
   </div>
 </div>

@@ -1,4 +1,4 @@
- <section class="signup" [formGroup]="signupForm" PasswordRepeat>
+<section class="signup" [formGroup]="signupForm" PasswordRepeat>
   <div class="container">
     <div class="auth-form">
       <div class="auth-title">
@@ -7,27 +7,53 @@
       <div class="auth-inputs">
         <div class="auth-input">
           <input type="text" class="input"
-                 [ngStyle]="{'border-color': signupForm.get('name')?.invalid
-                 && (signupForm.get('name')?.dirty || signupForm.get('name')?.touched) ? 'red' : ''}"
-                 placeholder="Ваше имя" formControlName="name">
+                 placeholder="Ваше имя"
+                 formControlName="name"
+                 [appInputError]="signupForm.get('name')"
+                 (focus)="activeField = 'name'"
+                 (blur)="activeField = null">
+          <div
+            class="field-hint"
+            *ngIf="activeField === 'name' && signupForm.get('name')?.invalid">
+            {{ getError('name') }}
+          </div>
         </div>
         <div class="auth-input">
           <input type="text" class="input"
-                 [ngStyle]="{'border-color': signupForm.get('email')?.invalid
-                 && (signupForm.get('email')?.dirty || signupForm.get('email')?.touched) ? 'red' : ''}"
-                 placeholder="Электронная почта" formControlName="email">
+                 placeholder="Электронная почта"
+                 formControlName="email"
+                 [appInputError]="signupForm.get('email')"
+                 (focus)="activeField = 'email'"
+                 (blur)="activeField = null">
+          <div
+            class="field-hint"
+            *ngIf="activeField === 'email' && signupForm.get('email')?.invalid">
+            {{ getError('email') }}
+          </div>
         </div>
         <div class="auth-input">
           <input type="password" class="input"
-                 [ngStyle]="{'border-color': signupForm.get('password')?.invalid
-                 && (signupForm.get('password')?.dirty || signupForm.get('password')?.touched) ? 'red' : ''}"
-                 placeholder="Пароль" formControlName="password">
+                 placeholder="Пароль"
+                 formControlName="password"
+                 [appInputError]="signupForm.get('password')"
+                 (focus)="activeField = 'password'"
+                 (blur)="activeField = null">
+          <div
+            class="field-hint"
+            *ngIf="activeField === 'password' && signupForm.get('password')?.invalid">
+            {{ getError('password') }}
+          </div>
         </div>
         <div class="auth-checkbox">
           <input type="checkbox" id="agree" formControlName="agree">
+          <div class="field-hint checkbox" *ngIf="showAgreeHint">
+            Остался последний шаг — подтвердите согласие с условиями соглашения
+          </div>
           <label for="agree">
-            Я принимаю <a href="assets/docs/policy.html#agreement" target="_blank">условия пользовательского соглашения</a>
-            и даю <a href="assets/docs/policy.html#personal-data" target="_blank">согласие на обработку персональных данных.</a></label>
+            Я принимаю <a href="assets/docs/policy.html#agreement" target="_blank">условия пользовательского
+            соглашения</a>
+            и даю <a href="assets/docs/policy.html#personal-data" target="_blank">согласие на обработку персональных
+            данных.</a></label>
         </div>
       </div>
       <div class="auth-button">

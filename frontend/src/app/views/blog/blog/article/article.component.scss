@@ -1,0 +1,112 @@
+@import '../../../../../../src/assets/styles/_variables';
+@import '../../../../../../src/assets/styles/mixins';
+
+.articles {
+  padding-top: 80px;
+  padding-bottom: 120px;
+
+  .container {
+    .article-title-head {
+      font-weight: 500;
+      color: $two-base-text-color;
+      margin-bottom: 60px;
+
+      span {
+        color: #B9D5FD;
+      }
+    }
+
+    .articles-article {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 60px;
+
+      .article-info {
+        color: $two-base-text-color;
+        max-width: 607px;
+
+        .article-info-title {
+          @include head-lora-36;
+          font-size: 38px;
+          line-height: 130%;
+          margin-bottom: 40px;
+        }
+
+        .article-info-description {
+          font-size: 20px;
+          line-height: 130%;
+        }
+      }
+
+      .article-images {
+        width: 527px;
+        height: 291px;
+        border-radius: 5px;
+        background-size: cover;
+        background-position: center;
+      }
+    }
+
+    .article-info-text {
+      column-gap: 130px;
+      display: grid;
+      grid-template-columns: 1fr 292px;
+
+      .article-content {
+        display: flex;
+        flex-direction: column;
+
+
+        .article-text {
+          max-width: 818px;
+        }
+
+        .article-footer {
+          margin-top: 60px;
+          display: flex;
+          column-gap: 20px;
+
+          .article-footer-text {
+            font-weight: 500;
+            font-size: 14px;
+            color: $two-base-text-color;
+          }
+
+          .article-footer-icons {
+            display: flex;
+            column-gap: 13px;
+
+            a {
+              cursor: pointer;
+            }
+          }
+        }
+      }
+
+      .related {
+        display: flex;
+        flex-direction: column;
+        width: 292px;
+        flex-shrink: 0;
+
+
+        .related-title {
+          margin-top: 120px;
+          margin-bottom: 20px;
+          @include head-lora-36;
+          font-size: 26px;
+        }
+      }
+
+      .related ::ng-deep .stories-posts {
+        grid-template-columns: 292px;
+        row-gap: 60px;
+        margin-bottom: 0;
+      }
+    }
+  }
+}
+
+
+

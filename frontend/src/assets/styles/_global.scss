@@ -261,3 +261,46 @@ select option {
   background: white;
   color: black;
 }
+
+.auth-input {
+  position: relative;
+}
+
+.field-hint {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  z-index: 10;
+
+  padding: 10px 14px;
+  border-radius: 8px;
+
+  font-size: 13px;
+  line-height: 1.4;
+
+  background: white;
+  border: $border-color-input;
+  color: $two-base-text-color;
+
+  box-shadow: 0 4px 12px rgba(0,0,0,.08);
+  &.checkbox {
+    top: calc(60% + 15px);
+    left: 111px;
+  }
+}
+
+.input-error {
+  border: 2px solid red;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 500;
+  font-size: 20px;
+  color: $two-base-text-color;
+}
+
+p {
+  font-size: 14px;
+  line-height: 130%;
+  color: $base-text-color;
+}

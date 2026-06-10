@@ -2,7 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {PostType} from "../../../types/post.type";
 import {OwlOptions} from 'ngx-owl-carousel-o';
 import {CarouselComponent} from 'ngx-owl-carousel-o';
-import {PostService} from "../../shared/services/post.service";
+import {ArticlesService} from "../../shared/services/articles.service";
 import {checkResponse} from "../../shared/helpers/response.helper";
 import {environment} from "../../../environments/environment";
 import {OrderPopupComponent} from "../../shared/components/order-popup/order-popup.component";
@@ -212,7 +212,7 @@ export class MainComponent implements OnInit {
   ];
 
 
-  constructor(private postService: PostService,
+  constructor(private postService: ArticlesService,
               private dialog: MatDialog) {
   }
 

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {BehaviorSubject, Observable, tap} from "rxjs";
 import {environment} from "../../../environments/environment";
 import {HttpClient} from "@angular/common/http";
-import {CartType} from "../../../types/cart.type";
+import {ArticleType} from "../../../types/article.type";
 import {DefaultResponseType} from "../../../types/default-response.type";
 import {AuthService} from "../../core/auth/auth.service";
 
@@ -26,8 +26,8 @@ export class CartService {
     });
   }
 
-  getCart(): Observable<CartType | DefaultResponseType> {
-    return this.http.get<CartType | DefaultResponseType>(environment.api + 'cart', {withCredentials: true});
+  getCart(): Observable<ArticleType | DefaultResponseType> {
+    return this.http.get<ArticleType | DefaultResponseType>(environment.api + 'cart', {withCredentials: true});
   }
 
   getCartCount(): Observable<{count: number} | DefaultResponseType> {
@@ -42,14 +42,14 @@ export class CartService {
     )
   }
 
-  updateCart(productId: string, quantity: number): Observable<CartType | DefaultResponseType> {
-    return this.http.post<CartType | DefaultResponseType>(environment.api + 'cart', {productId, quantity}, {withCredentials: true})
+  updateCart(productId: string, quantity: number): Observable<ArticleType | DefaultResponseType> {
+    return this.http.post<ArticleType | DefaultResponseType>(environment.api + 'cart', {productId, quantity}, {withCredentials: true})
       .pipe(
         tap(data => {
 
           if (!(data as DefaultResponseType).error) {
             this.count = 0;
-            (data as CartType).items.forEach(item => {
+            (data as ArticleType).items.forEach(item => {
               this.count += item.quantity;
             });
             this.countSubject.next(this.count);

@@ -10,6 +10,7 @@ import {OrderPopupComponent} from "../../components/order-popup/order-popup.comp
 export class FooterComponent implements OnInit {
 
   activeSection: string = '';
+  currentYear = new Date().getFullYear();
 
   constructor(private dialog: MatDialog) {
   }

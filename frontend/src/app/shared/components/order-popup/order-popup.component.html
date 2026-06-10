@@ -31,18 +31,33 @@
       </div>
       <div class="auth-input">
         <input type="text" class="input"
-               [ngStyle]="{'border-color': form.get('name')?.invalid
-           && (form.get('name')?.dirty || form.get('name')?.touched) ? 'red' : ''}"
-               placeholder="Ваше имя" formControlName="name">
+               [appInputError]="form.get('name')"
+               placeholder="Ваше имя"
+               formControlName="name"
+               (focus)="activeField = 'name'"
+               (blur)="activeField = null">
+        <div
+          class="field-hint"
+          *ngIf="activeField === 'name' && form.get('name')?.invalid">
+          {{ getError('name') }}
+        </div>
       </div>
       <div class="auth-input">
         <input type="tel" class="input"
-               [ngStyle]="{'border-color': form.get('phone')?.invalid
-           && (form.get('phone')?.dirty || form.get('phone')?.touched) ? 'red' : ''}"
-               placeholder="Ваш номер телефона" formControlName="phone"
-               mask="+0 (000) 000-00-00" [dropSpecialCharacters]="true">
+               [appInputError]="form.get('phone')"
+               placeholder="Ваш номер телефона"
+               formControlName="phone"
+               mask="+0 (000) 000-00-00"
+               [dropSpecialCharacters]="true"
+               (focus)="activeField = 'phone'"
+               (blur)="activeField = null">
+        <div
+          class="field-hint"
+          *ngIf="activeField === 'phone' && form.get('phone')?.invalid">
+          {{ getError('phone') }}
+        </div>
       </div>
-      <button class="button" type="submit">{{ data?.mode === 'service' ? 'Оставить заявку' : 'Заказать консультацию' }}</button>
+      <button class="button" type="submit" [disabled]="form.invalid">{{ data?.mode === 'service' ? 'Оставить заявку' : 'Заказать консультацию' }}</button>
     </form>
   </div>
 
