@@ -18,10 +18,6 @@ export class UserService {
   constructor(private http: HttpClient,
               private authService: AuthService) {}
 
-  // updateUserInfo(params:UserInfoType): Observable<DefaultResponseType> {
-  //   return this.http.post<DefaultResponseType>(environment.api + 'users', params)
-  // }
-
   getUserInfo(): Observable<UserInfoType> {
     const token = localStorage.getItem('accessToken');
     return this.http.get<UserInfoType>(environment.api + 'users', {

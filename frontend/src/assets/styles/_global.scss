@@ -42,20 +42,6 @@ app-root {
   color: $base-text-color;
 }
 
-.small-input {
-  border: $border-color-input-small;
-  border-radius: 5px;
-  text-align: center;
-  padding: 2px;
-  box-sizing: border-box;
-  width: 40px;
-  height: 28px;
-  font-family: "Montserrat", sans-serif;
-  font-weight: 400;
-  font-size: 18px;
-  color: $base-text-color;
-}
-
 .button {
   text-align: center;
   padding: 15px;
@@ -71,7 +57,6 @@ app-root {
 
   &.button-transparent {
     background-color: transparent;
-    border: $border-color-input-small;
     color: $base-text-color;
   }
 
@@ -112,9 +97,10 @@ app-root {
   }
 }
 
-a.button {
+a {
   text-decoration: none;
   display: inline-block;
+  cursor: pointer;
 }
 
 .mat-menu-item {
@@ -124,7 +110,6 @@ a.button {
 
   a {
     color: $base-text-color;
-    text-decoration: none;
   }
 }
 
@@ -144,8 +129,6 @@ a.button {
     justify-content: center;
 
     a {
-      cursor: pointer;
-
       &:first-child {
         margin-right: 30px;
       }
@@ -184,70 +167,18 @@ a.button {
   opacity: 0.8;
 }
 
-[type='radio']:checked,
-[type='radio']:not(:checked) {
-  position: absolute;
-  left: -9999px;
-}
-
-[type='radio']:checked + label,
-[type='radio']:not(:checked) + label {
-  position: relative;
-  padding-left: 28px;
-  cursor: pointer;
-  line-height: 20px;
-  display: inline-block;
-  color: $base-text-color;
-
-}
-
-[type='radio']:checked + label:before,
-[type='radio']:not(:checked) + label:before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 18px;
-  height: 18px;
-  border: $border-color-input;
-  box-sizing: border-box;
-  border-radius: 100%;
-  background: white;
-}
-
-[type='radio']:checked + label:after,
-[type='radio']:not(:checked) + label:after {
-  content: '';
-  position: absolute;
-  left: 5px;
-  top: 5px;
-  width: 8px;
-  height: 8px;
-  border-radius: 100%;
-  background: $background-color-radio;
-  -webkit-transition: all 0.2s ease;
-  transition: all 0.2s ease;
-}
-
-[type='radio']:not(:checked) + label:after {
-  opacity: 0;
-  -webkit-transform: scale(0);
-  transform: scale(0);
-}
-
-[type='radio']:checked + label:after {
-  opacity: 1;
-  -webkit-transform: scale(1);
-  transform: scale(1);
-}
-
 .mat-dialog-container {
   padding: 0 !important;
   border-radius: 10px !important;
 }
 
-.mat-progress-spinner circle, .mat-spinner circle {
-  stroke: $base-text-color;
+//.mat-progress-spinner circle, .mat-spinner circle {
+//  stroke: $base-text-color;
+//}
+
+.mat-snack-bar-container {
+  background: $two-base-text-color;
+  color: white;
 }
 
 select.input {

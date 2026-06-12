@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {RouterModule} from "@angular/router";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import { CountSelectorComponent } from './components/count-selector/count-selector.component';
 import { IfAuthDirective } from './directives/if-auth.directive';
 import { LoaderComponent } from './components/loader/loader.component';
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
@@ -13,6 +12,7 @@ import {NgxMaskModule} from "ngx-mask";
 import { TruncatePipe } from './pipes/truncate.pipe';
 import {PostBlogComponent} from "./components/post-blog/post-blog.component";
 import {InputErrorDirective} from "./directives/input-error.directive";
+import { CommentsComponent } from './components/comments/comments.component';
 
 
 
@@ -21,12 +21,12 @@ import {InputErrorDirective} from "./directives/input-error.directive";
     [
       InputErrorDirective,
       PostBlogComponent,
-      CountSelectorComponent,
       IfAuthDirective,
       LoaderComponent,
       OrderPopupComponent,
       SuccessPopupComponent,
-      TruncatePipe
+      TruncatePipe,
+      CommentsComponent
     ],
   imports: [
     CommonModule,
@@ -41,12 +41,12 @@ import {InputErrorDirective} from "./directives/input-error.directive";
   exports: [
     InputErrorDirective,
     PostBlogComponent,
-    CountSelectorComponent,
     IfAuthDirective,
     LoaderComponent,
     NgxMaskModule,
     OrderPopupComponent,
-    TruncatePipe
+    TruncatePipe,
+    CommentsComponent
   ]
 })
 export class SharedModule { }

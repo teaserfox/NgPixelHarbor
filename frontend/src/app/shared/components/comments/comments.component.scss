@@ -1,0 +1,123 @@
+@import '../../../../../src/assets/styles/_variables';
+@import '../../../../../src/assets/styles/mixins';
+
+.comments {
+  position: relative;
+  .container {
+    .comments-title {
+      @include head-lora-36;
+      font-size: 38px;
+    }
+    .comments-auth {
+      font-size: 14px;
+      color: $base-text-color;
+      margin-top: 20px;
+      a {
+        color: $two-base-text-color;
+      }
+    }
+    .comments-auth-input {
+      display: flex;
+      flex-direction: column;
+      row-gap: 20px;
+      .comments-auth-input-text {
+        margin-top: 20px;
+        font-size: 14px;
+        color: $base-text-color;
+      }
+      .comments-input {
+        margin-top: 40px;
+        border: $border-color-input;
+        min-height: 248px;
+        padding: 20px;
+        font-size: 14px;
+        line-height: 130%;
+        border-radius: 3px;
+        resize: none;
+        &::placeholder {
+          color: $text-textarea-placeholder;
+        }
+      }
+      .button {
+        width: 422px;
+      }
+    }
+    .comments-group-items {
+      margin-top: 40px;
+      .comments-group-item {
+        .comments-group-item-profile {
+          display: flex;
+          align-items: center;
+          column-gap: 26px;
+          margin-top: 40px;
+          .avatar {
+            position: relative;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color :#B9D5FD;
+            border: $border-color-input;
+            svg {
+              z-index: 2;
+            }
+          }
+          .details {
+            font-weight: 600;
+            .name {
+              font-size: 18px;
+              color: $two-base-text-color;
+              margin-bottom: 10px;
+              &::first-letter {
+                text-transform: uppercase;
+              }
+            }
+            .data {
+              font-size: 14px;
+              color: #BEBEBE;
+            }
+          }
+        }
+        .comments-group-item-comment {
+          margin-top: 15px;
+          font-size: 14px;
+          line-height: 140%;
+          color: $base-text-color;
+          width: 854px;
+        }
+        .comments-group-item-icons {
+          margin-top: 39px;
+          display: flex;
+          align-items: center;
+          column-gap: 15px;
+          .like, .dislike, .spam {
+            cursor: pointer;
+            column-gap: 2px;
+            display: flex;
+            align-items: center;
+            color: $base-text-color;
+            &.active {
+              color: $two-base-text-color;
+            }
+            &.active svg path {
+              stroke: $two-base-text-color;
+            }
+            &.disabled {
+              opacity: 0.6;
+              cursor: not-allowed;
+            }
+          }
+        }
+      }
+      .load-more-comments {
+        display: flex;
+        align-items: center;
+        margin-top: 60px;
+        column-gap: 10px;
+        font-weight: 500;
+        font-size: 20px;
+        color: $two-base-text-color;
+        cursor: pointer;
+      }
+    }
+  }
+}

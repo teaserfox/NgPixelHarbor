@@ -15,7 +15,7 @@
             <ul>
               <li><a routerLink="/"  [class.active]="activeSection === 'solutions'" fragment="solutions">Услуги</a></li>
               <li><a routerLink="/"  [class.active]="activeSection === 'about'" fragment="about">О нас</a></li>
-              <li><a routerLink="/"  [class.active]="activeSection === 'stories'" fragment="stories">Статьи</a></li>
+              <li><a routerLink="/"  [class.active]="activeSection === 'stories' || router.url.startsWith('/articles')" fragment="stories">Статьи</a></li>
               <li><a routerLink="/"  [class.active]="activeSection === 'reviews'" fragment="reviews">Отзывы</a></li>
               <li><a routerLink="/"  [class.active]="activeSection === 'contacts'" fragment="contacts">Контакты</a></li>
             </ul>
@@ -35,7 +35,7 @@
             <div *ngIf="!(isLogged$ | async)">Войти</div>
           </a>
           <a *ngIf="isLogged$ | async " [matMenuTriggerFor]="menu">
-            <div>Привет,  {{ (user$ | async)?.name || ''}} </div>
+            <div class="name">Привет,  {{ (user$ | async)?.name || ''}} </div>
           </a>
           <mat-menu #menu="matMenu">
             <button mat-menu-item>
@@ -43,7 +43,6 @@
             </button>
           </mat-menu>
         </div>
-
       </div>
   </div>
 </header>

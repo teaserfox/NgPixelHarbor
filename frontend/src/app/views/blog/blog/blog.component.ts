@@ -3,13 +3,13 @@ import {PostType} from "../../../../types/post.type";
 import {CategoryService} from "../../../shared/services/category.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {ActiveParamsType} from "../../../../types/active-params.type";
-import {AppliedFilterType} from "../../../../types/applied-filter";
 import {ArticleType} from "../../../../types/article.type";
 import {ArticlesService} from "../../../shared/services/articles.service";
 import {AuthService} from "../../../core/auth/auth.service";
 import {checkResponse} from "../../../shared/helpers/response.helper";
 import {CategoryType} from "../../../../types/category.type";
 import {PostsResponseType} from "../../../../types/post-response.type";
+import {AppliedFilterType} from "../../../../types/applied-filter";
 
 
 @Component({

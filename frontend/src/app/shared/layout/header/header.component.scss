@@ -68,7 +68,9 @@ header.header {
       align-items: center;
       gap: 20px;
       flex-shrink: 0;
-
+        .name  {
+          text-transform: capitalize;
+        }
       a {
         position: relative;
         cursor: pointer;

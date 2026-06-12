@@ -67,6 +67,9 @@
             </a>
           </div>
         </div>
+        <comments
+          *ngIf="article" [articleId]="article.id">
+        </comments>
       </div>
       <div class="related">
         <div class="related-title">Читайте также:</div>

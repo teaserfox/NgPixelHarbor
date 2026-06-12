@@ -16,7 +16,7 @@ import {AuthInterceptor} from "./core/auth/auth.interceptor";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {registerLocaleData} from "@angular/common";
 import localeRu from '@angular/common/locales/ru';
-import {MatTooltipModule} from "@angular/material/tooltip";
+
 
 
 registerLocaleData(localeRu);

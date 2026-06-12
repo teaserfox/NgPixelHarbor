@@ -7,8 +7,6 @@ export type ArticleType = {
   date: string;
   category: string;
   url: string;
-
-  // comments: ArticleCommentType[];
   commentsCount: number;
 };
 
