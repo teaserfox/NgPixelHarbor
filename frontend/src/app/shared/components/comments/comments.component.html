@@ -6,6 +6,9 @@
       <a routerLink="/login">войдите</a>
       или <a routerLink="/signup">зарегистрируйтесь</a>.
     </div>
+    <div class="comments-auth-input-text" *ngIf="!(isLogged$ | async) && allCommentsCount === 0">
+      Комментариев пока нет
+    </div>
     <div class="comments-auth-input" *ngIf="(isLogged$ | async)">
       <div class="comments-auth-input-text"
            *ngIf="allCommentsCount === 0">

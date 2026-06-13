@@ -16,6 +16,11 @@
         color: $two-base-text-color;
       }
     }
+    .comments-auth-input-text {
+      margin-top: 20px;
+      font-size: 14px;
+      color: $base-text-color;
+    }
     .comments-auth-input {
       display: flex;
       flex-direction: column;
